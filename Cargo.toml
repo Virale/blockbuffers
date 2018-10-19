@@ -1,0 +1,9 @@
+[package]
+name = "fbg"
+version = "0.1.0"
+authors = ["ian <ian@nervos.org>"]
+
+[dependencies]
+
+[dev-dependencies]
+flatbuffers = "0.5.0"
