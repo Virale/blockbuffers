@@ -1,0 +1,44 @@
+namespace example;
+
+enum Language :short { Rust, Python }
+
+struct Scalars {
+    a_byte: byte;
+    a_ubyte: ubyte;
+    a_bool: bool;
+    a_short: short;
+    a_ushort: ushort;
+    a_int: int;
+    a_uint: uint;
+    a_float: float;
+    a_long: long;
+    a_ulong: ulong;
+    a_double: double;
+}
+
+table Example {
+    version: uint32;
+    language: Language;
+    scalars: Scalars;
+    info: string (deprecated);
+    blocks: [Block];
+}
+
+table Code {
+    bytes: [ubyte];
+}
+union CodeOption {
+    Code
+}
+
+table Author {
+    name: string;
+    birth: uint32;
+}
+
+table Block {
+    author: Author;
+    code: CodeOption;
+}
+
+root_type Example;

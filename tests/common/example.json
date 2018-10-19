@@ -1,0 +1,329 @@
+{
+  "objects": [
+    {
+      "name": "example.Author",
+      "fields": [
+        {
+          "name": "birth",
+          "type": {
+            "base_type": "UInt"
+          },
+          "id": 1,
+          "offset": 6
+        },
+        {
+          "name": "name",
+          "type": {
+            "base_type": "String"
+          },
+          "offset": 4
+        }
+      ],
+      "minalign": 1
+    },
+    {
+      "name": "example.Block",
+      "fields": [
+        {
+          "name": "author",
+          "type": {
+            "base_type": "Obj",
+            "index": 0
+          },
+          "offset": 4
+        },
+        {
+          "name": "code",
+          "type": {
+            "base_type": "Union",
+            "index": 0
+          },
+          "id": 2,
+          "offset": 8
+        },
+        {
+          "name": "code_type",
+          "type": {
+            "base_type": "UType",
+            "index": 0
+          },
+          "id": 1,
+          "offset": 6
+        }
+      ],
+      "minalign": 1
+    },
+    {
+      "name": "example.Code",
+      "fields": [
+        {
+          "name": "bytes",
+          "type": {
+            "base_type": "Vector",
+            "element": "UByte"
+          },
+          "offset": 4
+        }
+      ],
+      "minalign": 1
+    },
+    {
+      "name": "example.Example",
+      "fields": [
+        {
+          "name": "blocks",
+          "type": {
+            "base_type": "Vector",
+            "element": "Obj",
+            "index": 1
+          },
+          "id": 4,
+          "offset": 12
+        },
+        {
+          "name": "info",
+          "type": {
+            "base_type": "String"
+          },
+          "id": 3,
+          "offset": 10,
+          "deprecated": true
+        },
+        {
+          "name": "language",
+          "type": {
+            "base_type": "Short",
+            "index": 1
+          },
+          "id": 1,
+          "offset": 6
+        },
+        {
+          "name": "scalars",
+          "type": {
+            "base_type": "Obj",
+            "index": 4
+          },
+          "id": 2,
+          "offset": 8
+        },
+        {
+          "name": "version",
+          "type": {
+            "base_type": "UInt"
+          },
+          "offset": 4
+        }
+      ],
+      "minalign": 1
+    },
+    {
+      "name": "example.Scalars",
+      "fields": [
+        {
+          "name": "a_bool",
+          "type": {
+            "base_type": "Bool"
+          },
+          "id": 2,
+          "offset": 2
+        },
+        {
+          "name": "a_byte",
+          "type": {
+            "base_type": "Byte"
+          }
+        },
+        {
+          "name": "a_double",
+          "type": {
+            "base_type": "Double"
+          },
+          "id": 10,
+          "offset": 40
+        },
+        {
+          "name": "a_float",
+          "type": {
+            "base_type": "Float"
+          },
+          "id": 7,
+          "offset": 16
+        },
+        {
+          "name": "a_int",
+          "type": {
+            "base_type": "Int"
+          },
+          "id": 5,
+          "offset": 8
+        },
+        {
+          "name": "a_long",
+          "type": {
+            "base_type": "Long"
+          },
+          "id": 8,
+          "offset": 24
+        },
+        {
+          "name": "a_short",
+          "type": {
+            "base_type": "Short"
+          },
+          "id": 3,
+          "offset": 4
+        },
+        {
+          "name": "a_ubyte",
+          "type": {
+            "base_type": "UByte"
+          },
+          "id": 1,
+          "offset": 1
+        },
+        {
+          "name": "a_uint",
+          "type": {
+            "base_type": "UInt"
+          },
+          "id": 6,
+          "offset": 12
+        },
+        {
+          "name": "a_ulong",
+          "type": {
+            "base_type": "ULong"
+          },
+          "id": 9,
+          "offset": 32
+        },
+        {
+          "name": "a_ushort",
+          "type": {
+            "base_type": "UShort"
+          },
+          "id": 4,
+          "offset": 6
+        }
+      ],
+      "is_struct": true,
+      "minalign": 8,
+      "bytesize": 48
+    }
+  ],
+  "enums": [
+    {
+      "name": "example.CodeOption",
+      "values": [
+        {
+          "name": "NONE",
+          "union_type": {
+          }
+        },
+        {
+          "name": "Code",
+          "value": 1,
+          "object": {
+            "name": "example.Code",
+            "fields": [
+              {
+                "name": "bytes",
+                "type": {
+                  "base_type": "Vector",
+                  "element": "UByte"
+                },
+                "offset": 4
+              }
+            ],
+            "minalign": 1
+          },
+          "union_type": {
+            "base_type": "Obj",
+            "index": 2
+          }
+        }
+      ],
+      "is_union": true,
+      "underlying_type": {
+        "base_type": "UType",
+        "index": 0
+      }
+    },
+    {
+      "name": "example.Language",
+      "values": [
+        {
+          "name": "Rust",
+          "union_type": {
+          }
+        },
+        {
+          "name": "Python",
+          "value": 1,
+          "union_type": {
+          }
+        }
+      ],
+      "underlying_type": {
+        "base_type": "Short",
+        "index": 1
+      }
+    }
+  ],
+  "file_ident": "",
+  "file_ext": "",
+  "root_table": {
+    "name": "example.Example",
+    "fields": [
+      {
+        "name": "blocks",
+        "type": {
+          "base_type": "Vector",
+          "element": "Obj",
+          "index": 1
+        },
+        "id": 4,
+        "offset": 12
+      },
+      {
+        "name": "info",
+        "type": {
+          "base_type": "String"
+        },
+        "id": 3,
+        "offset": 10,
+        "deprecated": true
+      },
+      {
+        "name": "language",
+        "type": {
+          "base_type": "Short",
+          "index": 1
+        },
+        "id": 1,
+        "offset": 6
+      },
+      {
+        "name": "scalars",
+        "type": {
+          "base_type": "Obj",
+          "index": 4
+        },
+        "id": 2,
+        "offset": 8
+      },
+      {
+        "name": "version",
+        "type": {
+          "base_type": "UInt"
+        },
+        "offset": 4
+      }
+    ],
+    "minalign": 1
+  },
+  "services": [
+
+  ]
+}
