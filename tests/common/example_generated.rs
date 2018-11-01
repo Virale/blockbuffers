@@ -121,6 +121,60 @@ pub mod example {
     }
 
     pub struct CodeOptionUnionTableOffset {}
+    // struct H256, aligned to 1
+    #[repr(C, align(1))]
+    #[derive(Clone, Copy, Debug, PartialEq)]
+    pub struct H256 {
+        byte_0_: u8,
+    } // pub struct H256
+    impl flatbuffers::SafeSliceAccess for H256 {}
+    impl<'a> flatbuffers::Follow<'a> for H256 {
+        type Inner = &'a H256;
+        #[inline]
+        fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+            <&'a H256>::follow(buf, loc)
+        }
+    }
+    impl<'a> flatbuffers::Follow<'a> for &'a H256 {
+        type Inner = &'a H256;
+        #[inline]
+        fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+            flatbuffers::follow_cast_ref::<H256>(buf, loc)
+        }
+    }
+    impl<'b> flatbuffers::Push for H256 {
+        type Output = H256;
+        #[inline]
+        fn push(&self, dst: &mut [u8], _rest: &[u8]) {
+            let src = unsafe {
+                ::std::slice::from_raw_parts(self as *const H256 as *const u8, Self::size())
+            };
+            dst.copy_from_slice(src);
+        }
+    }
+    impl<'b> flatbuffers::Push for &'b H256 {
+        type Output = H256;
+
+        #[inline]
+        fn push(&self, dst: &mut [u8], _rest: &[u8]) {
+            let src = unsafe {
+                ::std::slice::from_raw_parts(*self as *const H256 as *const u8, Self::size())
+            };
+            dst.copy_from_slice(src);
+        }
+    }
+
+    impl H256 {
+        pub fn new<'a>(_byte_0: u8) -> Self {
+            H256 {
+                byte_0_: _byte_0.to_little_endian(),
+            }
+        }
+        pub fn byte_0<'a>(&'a self) -> u8 {
+            self.byte_0_.from_little_endian()
+        }
+    }
+
     // struct Scalars, aligned to 8
     #[repr(C, align(8))]
     #[derive(Clone, Copy, Debug, PartialEq)]
@@ -242,6 +296,99 @@ pub mod example {
         }
     }
 
+    pub enum ChildExampleOffset {}
+    #[derive(Copy, Clone, Debug, PartialEq)]
+
+    pub struct ChildExample<'a> {
+        pub _tab: flatbuffers::Table<'a>,
+    }
+
+    impl<'a> flatbuffers::Follow<'a> for ChildExample<'a> {
+        type Inner = ChildExample<'a>;
+        #[inline]
+        fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+            Self {
+                _tab: flatbuffers::Table { buf: buf, loc: loc },
+            }
+        }
+    }
+
+    impl<'a> ChildExample<'a> {
+        #[inline]
+        pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+            ChildExample { _tab: table }
+        }
+        #[allow(unused_mut)]
+        pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+            _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+            args: &'args ChildExampleArgs<'args>,
+        ) -> flatbuffers::WIPOffset<ChildExample<'bldr>> {
+            let mut builder = ChildExampleBuilder::new(_fbb);
+            if let Some(x) = args.buffer {
+                builder.add_buffer(x);
+            }
+            builder.finish()
+        }
+
+        pub const VT_BUFFER: flatbuffers::VOffsetT = 4;
+
+        #[inline]
+        pub fn buffer(&self) -> Option<&'a [u8]> {
+            self._tab
+                .get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(
+                    ChildExample::VT_BUFFER,
+                    None,
+                ).map(|v| v.safe_slice())
+        }
+        pub fn buffer_nested_flatbuffer(&'a self) -> Option<ChildExample<'a>> {
+            match self.buffer() {
+                None => None,
+                Some(data) => {
+                    use self::flatbuffers::Follow;
+                    Some(<flatbuffers::ForwardsUOffset<ChildExample<'a>>>::follow(
+                        data, 0,
+                    ))
+                }
+            }
+        }
+    }
+
+    pub struct ChildExampleArgs<'a> {
+        pub buffer: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, u8>>>,
+    }
+    impl<'a> Default for ChildExampleArgs<'a> {
+        #[inline]
+        fn default() -> Self {
+            ChildExampleArgs { buffer: None }
+        }
+    }
+    pub struct ChildExampleBuilder<'a: 'b, 'b> {
+        fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+        start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+    }
+    impl<'a: 'b, 'b> ChildExampleBuilder<'a, 'b> {
+        #[inline]
+        pub fn add_buffer(&mut self, buffer: flatbuffers::WIPOffset<flatbuffers::Vector<'b, u8>>) {
+            self.fbb_
+                .push_slot_always::<flatbuffers::WIPOffset<_>>(ChildExample::VT_BUFFER, buffer);
+        }
+        #[inline]
+        pub fn new(
+            _fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+        ) -> ChildExampleBuilder<'a, 'b> {
+            let start = _fbb.start_table();
+            ChildExampleBuilder {
+                fbb_: _fbb,
+                start_: start,
+            }
+        }
+        #[inline]
+        pub fn finish(self) -> flatbuffers::WIPOffset<ChildExample<'a>> {
+            let o = self.fbb_.end_table(self.start_);
+            flatbuffers::WIPOffset::new(o.value())
+        }
+    }
+
     pub enum ExampleOffset {}
     #[derive(Copy, Clone, Debug, PartialEq)]
 
@@ -271,6 +418,9 @@ pub mod example {
         ) -> flatbuffers::WIPOffset<Example<'bldr>> {
             let mut builder = ExampleBuilder::new(_fbb);
             builder.add_lines(args.lines);
+            if let Some(x) = args.children {
+                builder.add_children(x);
+            }
             if let Some(x) = args.blocks {
                 builder.add_blocks(x);
             }
@@ -286,7 +436,8 @@ pub mod example {
         pub const VT_LANGUAGE: flatbuffers::VOffsetT = 6;
         pub const VT_SCALARS: flatbuffers::VOffsetT = 8;
         pub const VT_BLOCKS: flatbuffers::VOffsetT = 12;
-        pub const VT_LINES: flatbuffers::VOffsetT = 14;
+        pub const VT_CHILDREN: flatbuffers::VOffsetT = 14;
+        pub const VT_LINES: flatbuffers::VOffsetT = 16;
 
         #[inline]
         pub fn version(&self) -> u32 {
@@ -311,6 +462,14 @@ pub mod example {
             >>(Example::VT_BLOCKS, None)
         }
         #[inline]
+        pub fn children(
+            &self,
+        ) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<ChildExample<'a>>>> {
+            self._tab.get::<flatbuffers::ForwardsUOffset<
+                flatbuffers::Vector<flatbuffers::ForwardsUOffset<ChildExample<'a>>>,
+            >>(Example::VT_CHILDREN, None)
+        }
+        #[inline]
         pub fn lines(&self) -> u32 {
             self._tab.get::<u32>(Example::VT_LINES, Some(0)).unwrap()
         }
@@ -325,6 +484,11 @@ pub mod example {
                 flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Block<'a>>>,
             >,
         >,
+        pub children: Option<
+            flatbuffers::WIPOffset<
+                flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ChildExample<'a>>>,
+            >,
+        >,
         pub lines: u32,
     }
     impl<'a> Default for ExampleArgs<'a> {
@@ -335,6 +499,7 @@ pub mod example {
                 language: Language::Rust,
                 scalars: None,
                 blocks: None,
+                children: None,
                 lines: 0,
             }
         }
@@ -367,6 +532,16 @@ pub mod example {
         ) {
             self.fbb_
                 .push_slot_always::<flatbuffers::WIPOffset<_>>(Example::VT_BLOCKS, blocks);
+        }
+        #[inline]
+        pub fn add_children(
+            &mut self,
+            children: flatbuffers::WIPOffset<
+                flatbuffers::Vector<'b, flatbuffers::ForwardsUOffset<ChildExample<'b>>>,
+            >,
+        ) {
+            self.fbb_
+                .push_slot_always::<flatbuffers::WIPOffset<_>>(Example::VT_CHILDREN, children);
         }
         #[inline]
         pub fn add_lines(&mut self, lines: u32) {

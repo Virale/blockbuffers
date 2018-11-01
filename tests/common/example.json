@@ -54,6 +54,26 @@
       "minalign": 1
     },
     {
+      "name": "example.ChildExample",
+      "fields": [
+        {
+          "name": "buffer",
+          "type": {
+            "base_type": "Vector",
+            "element": "UByte"
+          },
+          "offset": 4,
+          "attributes": [
+            {
+              "key": "nested_flatbuffer",
+              "value": "Example"
+            }
+          ]
+        }
+      ],
+      "minalign": 1
+    },
+    {
       "name": "example.Code",
       "fields": [
         {
@@ -81,19 +101,23 @@
           "offset": 12
         },
         {
+          "name": "children",
+          "type": {
+            "base_type": "Vector",
+            "element": "Obj",
+            "index": 2
+          },
+          "id": 5,
+          "offset": 14
+        },
+        {
           "name": "info",
           "type": {
             "base_type": "String"
           },
           "id": 3,
           "offset": 10,
-          "deprecated": true,
-          "attributes": [
-            {
-              "key": "deprecated_version",
-              "value": "2"
-            }
-          ]
+          "deprecated": true
         },
         {
           "name": "language",
@@ -109,8 +133,8 @@
           "type": {
             "base_type": "UInt"
           },
-          "id": 5,
-          "offset": 14,
+          "id": 6,
+          "offset": 16,
           "attributes": [
             {
               "key": "since_version",
@@ -122,7 +146,7 @@
           "name": "scalars",
           "type": {
             "base_type": "Obj",
-            "index": 4
+            "index": 6
           },
           "id": 2,
           "offset": 8
@@ -136,6 +160,26 @@
         }
       ],
       "minalign": 1
+    },
+    {
+      "name": "example.H256",
+      "fields": [
+        {
+          "name": "byte_0",
+          "type": {
+            "base_type": "UByte"
+          }
+        }
+      ],
+      "is_struct": true,
+      "minalign": 1,
+      "bytesize": 1,
+      "attributes": [
+        {
+          "key": "array",
+          "value": "[ubyte]"
+        }
+      ]
     },
     {
       "name": "example.Scalars",
@@ -260,7 +304,7 @@
           },
           "union_type": {
             "base_type": "Obj",
-            "index": 2
+            "index": 3
           }
         }
       ],
@@ -307,19 +351,23 @@
         "offset": 12
       },
       {
+        "name": "children",
+        "type": {
+          "base_type": "Vector",
+          "element": "Obj",
+          "index": 2
+        },
+        "id": 5,
+        "offset": 14
+      },
+      {
         "name": "info",
         "type": {
           "base_type": "String"
         },
         "id": 3,
         "offset": 10,
-        "deprecated": true,
-        "attributes": [
-          {
-            "key": "deprecated_version",
-            "value": "2"
-          }
-        ]
+        "deprecated": true
       },
       {
         "name": "language",
@@ -335,8 +383,8 @@
         "type": {
           "base_type": "UInt"
         },
-        "id": 5,
-        "offset": 14,
+        "id": 6,
+        "offset": 16,
         "attributes": [
           {
             "key": "since_version",
@@ -348,7 +396,7 @@
         "name": "scalars",
         "type": {
           "base_type": "Obj",
-          "index": 4
+          "index": 6
         },
         "id": 2,
         "offset": 8
