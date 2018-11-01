@@ -12,7 +12,7 @@ use types::{Len, VOffset, SIZE_OF_LEN, SIZE_OF_VOFFSET};
 /// # Examples
 ///
 /// ```
-/// use fbg::position::VectorPosition;
+/// use blockbuffers::position::VectorPosition;
 ///
 /// let buf = &[02u8, 0, 0, 0, 1, 0, 2, 0, 3, 0][..];
 /// let pos = VectorPosition(0);
@@ -50,13 +50,13 @@ impl VectorPosition {
 /// # Example
 ///
 /// ```
-/// use fbg::position::StringPosition;
+/// use blockbuffers::position::StringPosition;
 ///
-/// let buf = &[03u8, 0, 0, 0, 'f' as u8, 'b' as u8, 'g' as u8, 0][..];
+/// let buf = &[03u8, 0, 0, 0, 'b' as u8, 'b' as u8, 's' as u8, 0][..];
 /// let pos = StringPosition(0);
 ///
 /// assert_eq!(3, pos.len(buf));
-/// assert_eq!("fbg", pos.as_str(buf));
+/// assert_eq!("bbs", pos.as_str(buf));
 /// ```
 #[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub struct StringPosition(pub usize);
@@ -94,7 +94,7 @@ impl VTablePosition {
     /// # Example
     ///
     /// ```
-    /// use fbg::position::VTablePosition;
+    /// use blockbuffers::position::VTablePosition;
     ///
     /// let buf = &[4u8, 0, 6, 0][..];
     /// let pos = VTablePosition(0);
@@ -110,7 +110,7 @@ impl VTablePosition {
     /// # Examples
     ///
     /// ```
-    /// use fbg::position::VTablePosition;
+    /// use blockbuffers::position::VTablePosition;
     ///
     /// let buf = &[4u8, 0, 6, 0][..];
     /// let pos = VTablePosition(0);
@@ -131,7 +131,7 @@ impl VTablePosition {
     /// # Examples
     ///
     /// ```
-    /// use fbg::position::VTablePosition;
+    /// use blockbuffers::position::VTablePosition;
     ///
     /// // Field offsets are 20, 0, 4
     /// let buf = &[10u8, 0, 40, 0, 20, 0, 0, 0, 4, 0][..];
@@ -171,7 +171,7 @@ impl TablePosition {
     /// # Examples
     ///
     /// ```
-    /// use fbg::position::TablePosition;
+    /// use blockbuffers::position::TablePosition;
     /// //         | -4               | vtable      | 4         |
     /// let buf = &[252, 255, 255, 255, 4u8, 0, 4, 0, 4, 0, 0, 0][..];
     ///
@@ -192,7 +192,7 @@ impl TablePosition {
     /// # Examples
     ///
     /// ```
-    /// use fbg::position::TablePosition;
+    /// use blockbuffers::position::TablePosition;
     /// //       [vtable 10|    40|    20|    0|    4] [table   10]
     /// let buf = &[10u8, 0, 40, 0, 20, 0, 0, 0, 4, 0, 10, 0, 0, 0][..];
     /// let pos = TablePosition(10);

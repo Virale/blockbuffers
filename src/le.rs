@@ -14,7 +14,7 @@ pub trait LE: Sized {
     /// # Examples
     ///
     /// ```
-    /// use fbg::le::LE;
+    /// use blockbuffers::le::LE;
     ///
     /// assert_eq!(1u16, u16::from_le_slice(&[1u8, 0]));
     /// ```
@@ -34,8 +34,8 @@ pub trait LE: Sized {
 /// # Examples
 ///
 /// ```
-/// #[macro_use] extern crate fbg;
-/// use fbg::le::LE;
+/// #[macro_use] extern crate blockbuffers;
+/// use blockbuffers::le::LE;
 ///
 /// #[repr(u16)]
 /// #[derive(Copy, Clone)]
@@ -51,7 +51,7 @@ pub trait LE: Sized {
 #[macro_export]
 macro_rules! impl_le_for_enum {
     ($ty:ident, $repr:ident) => {{
-        use fbg::le::LE;
+        use blockbuffers::le::LE;
         use std::mem::transmute;
 
         impl LE for $ty {

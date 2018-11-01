@@ -1,5 +1,5 @@
-# fbg
+# blockbuffers
 
-Flatbuffers Generator
+Blockbuffers is a serialization tool which builds strict Flatbuffers binaries.
 
-[Documentation](https://nervosfoundation.github.io/fbg/doc/fbg/index.html)
+[Documentation](https://nervosfoundation.github.io/blockbuffers/doc/blockbuffers/index.html)

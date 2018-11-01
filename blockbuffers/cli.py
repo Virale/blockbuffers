@@ -1,7 +1,7 @@
 """Generate code from serialized flatbuffers schema in bfbs format.
 
 Usage:
-  fbg [(--hash-table=<table>... --hash-mod=<mod>)] [-o <dir>] <bfbs>
+  blockc [(--hash-table=<table>... --hash-mod=<mod>)] [-o <dir>] <bfbs>
 
 Options:
   <bfbs>                    bfbs file which is generated using `flatc -b --schema <fbs>`

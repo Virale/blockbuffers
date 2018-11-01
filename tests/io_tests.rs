@@ -1,4 +1,4 @@
-extern crate fbg;
+extern crate blockbuffers;
 extern crate flatbuffers;
 
 pub mod common;
